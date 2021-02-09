@@ -173,7 +173,7 @@
       if (accumulator === undefined) {
         accumulator = item;
       } else {
-        accumulator = iterator(accumulator, item) ?? accumulator
+        accumulator = iterator(accumulator, item) ?? accumulator;
       }
     });
     return accumulator;
