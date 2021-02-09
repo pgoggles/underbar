@@ -40,11 +40,11 @@
   // last element.
   _.last = function(array, n) {
     if (n === undefined) {
-      return array[array.length-1];
+      return array[array.length - 1];
     } else if (n > array.length) {
       return array;
     } else {
-      return array.slice(array.length-n)
+      return array.slice(array.length - n);
     }
   };
 
@@ -87,7 +87,7 @@
     var filteredList = [];
     _.each(collection, function (item) {
       if (test(item)) {
-        filteredList.push(item)
+        filteredList.push(item);
       }
     });
     return filteredList;
@@ -107,7 +107,7 @@
   _.uniq = function(array, isSorted, iterator) {
     var uniqueArray = [];
     var iteratorArray = [];
-    iterator = iterator ?? _.identity
+    iterator = iterator === undefined ? _.identity : iterator;
     _.each(array, function (item) {
       if (_.indexOf(iteratorArray, iterator(item)) === -1) {
         uniqueArray.push(item);
@@ -125,8 +125,8 @@
     // the members, it also maintains an array of results.
     var resultArray = [];
     _.each(collection, function (item) {
-      resultArray.push(iterator(item))
-      });
+      resultArray.push(iterator(item));
+    });
     return resultArray;
   };
 
@@ -173,7 +173,8 @@
       if (accumulator === undefined) {
         accumulator = item;
       } else {
-        accumulator = iterator(accumulator, item) ?? accumulator;
+        var iteratedItem = iterator(accumulator, item);
+        accumulator = iteratedItem === undefined ? accumulator : iteratedItem;
       }
     });
     return accumulator;
