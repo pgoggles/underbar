@@ -318,6 +318,14 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var completedFunctions = {};
+    var argumentsArray;
+    return function () {
+      if (!completedFunctions[func, JSON.stringify(arguments)]) {
+        completedFunctions[func, JSON.stringify(arguments)] = func.apply(this, arguments);
+      }
+      return completedFunctions[func, JSON.stringify(arguments)];
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -327,6 +335,11 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var argumentsArray = Array.prototype.slice.call(arguments);
+    argumentsArray = argumentsArray.slice(2);
+    setTimeout(function() {
+      func.apply(this, argumentsArray);
+    }, wait);
   };
 
 
@@ -341,6 +354,14 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var referenceArray = array.slice();
+    var shuffled = [];
+    while (referenceArray.length !== 0) {
+      var index = Math.floor(Math.random() * (referenceArray.length));
+      shuffled.push(referenceArray[index]);
+      referenceArray.splice(index, 1);
+    }
+    return shuffled;
   };
 
 
@@ -371,6 +392,7 @@
   // _.zip(['a','b','c','d'], [1,2,3])
   // returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
