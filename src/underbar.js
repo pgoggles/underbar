@@ -319,7 +319,6 @@
   // instead if possible.
   _.memoize = function(func) {
     var completedFunctions = {};
-    var argumentsArray;
     return function () {
       if (!completedFunctions[func, JSON.stringify(arguments)]) {
         completedFunctions[func, JSON.stringify(arguments)] = func.apply(this, arguments);
